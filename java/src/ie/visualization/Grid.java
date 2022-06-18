@@ -1,16 +1,19 @@
 package ie.visualization;
 
-
 import processing.core.PApplet;
 
 public class Grid extends PApplet {
 
-    public void drawGrid() {
 
-    }
+    int windowDimension = 800;
 
     public void settings() {
-        size(1000, 1000);
+        size(windowDimension, windowDimension);
+
+    }
+   
+    public void setup() {
+        colorMode(RGB);
 
     }
 
@@ -18,13 +21,30 @@ public class Grid extends PApplet {
 
     }
 
-    public void setup() {
-        colorMode(RGB);
+    Frame f;
+    
+    public void drawGrid() {
+        int frameIncrement = 50;
+        int count = 0;
 
+
+        for (int i = 0; i < this.windowDimension; i++) {
+            for (int j = 0; j < this.windowDimension; j++) {
+                if (i%frameIncrement == 0 & j%frameIncrement == 0){
+                    Frame f = new Frame( i, j, frameIncrement, count, this);
+                    ++count;
+                }
+            }
+        }
+        
     }
+ 
 
     public void draw() {
-        background(0);
-
+        background(26, 26, 26); 
+        drawGrid();
+        
     }
+
+    
 }
