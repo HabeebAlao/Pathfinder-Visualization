@@ -1,11 +1,14 @@
 package ie.visualization;
 
+import java.util.ArrayList;
+
 import processing.core.PApplet;
 
 public class Grid extends PApplet {
 
 
     int windowDimension = 800;
+    ArrayList <Frame> FrameList = new ArrayList <Frame> ();
 
     public void settings() {
         size(windowDimension, windowDimension);
@@ -33,9 +36,16 @@ public class Grid extends PApplet {
                 if (i%frameIncrement == 0 & j%frameIncrement == 0){
                     Frame f = new Frame( i, j, frameIncrement, count, this);
                     ++count;
+                    FrameList.add(f);
                 }
             }
         }
+
+        /*test for arraylist implementation
+        for (Frame i : FrameList) {
+            System.out.println(i.framePosition);
+        }
+        */
         
     }
  
