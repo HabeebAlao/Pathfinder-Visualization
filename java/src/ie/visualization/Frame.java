@@ -43,6 +43,17 @@ public class Frame extends PApplet{
 
     }
 
+    public float getX() {
+        return this.x;
+    }
+    
+    public float getY() {
+        return this.y;
+    }
+
+    public void setObstacle() {
+        
+    }
     
     
 
