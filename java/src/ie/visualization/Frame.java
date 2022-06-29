@@ -11,6 +11,9 @@ public class Frame extends PApplet{
     
 
     int framePosition ;
+    int isObstacle;
+
+    
 
     
     public Frame(float x, float y, float w, int framePosition, Grid G){
@@ -19,9 +22,19 @@ public class Frame extends PApplet{
         this.y = y;
         this.w = w;
         this.framePosition = framePosition;
+        this.isObstacle = 0;
 
 
         this.drawFrame();
+    }
+
+    private void colorIn(){
+        if(isObstacle == 1){
+            G.fill(204, 204, 204);
+        }
+        else{
+            G.fill(255, 185, 20);
+        }
     }
 
     public void drawFrame(){
@@ -29,7 +42,12 @@ public class Frame extends PApplet{
         G.rectMode(LEFT);
         G.stroke(1);
         
-        G.fill(255, 185, 20);
+        if(isObstacle==1){
+            G.fill(204, 204, 204);
+        }
+        else{
+            G.fill(255, 185, 20);
+        }
 
         // frame drawn using given parameters
         G.rect(this.x, this.y, this.x + this.w, this.y + this.w);
@@ -51,8 +69,13 @@ public class Frame extends PApplet{
         return this.y;
     }
 
+    public float getPos() {
+        return this.framePosition;
+    }
+
     public void setObstacle() {
-        
+        this.isObstacle = 1;
+        drawFrame();
     }
     
     
