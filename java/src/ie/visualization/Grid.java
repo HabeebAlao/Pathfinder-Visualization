@@ -17,7 +17,11 @@ public class Grid extends PApplet {
 
     public void setup() {
         colorMode(RGB);
+        generateFrames();
 
+    }
+
+    public void generateFrames() {
         int count = 0;
         for (int i = 0; i < this.windowDimension; i++) {
             for (int j = 0; j < this.windowDimension; j++) {
@@ -28,7 +32,6 @@ public class Grid extends PApplet {
                 }
             }
         }
-
     }
 
     public void keyPressed() {
@@ -39,7 +42,6 @@ public class Grid extends PApplet {
 
     public void drawGrid() {
         frameIncrement = 50;
-        
 
         for (Frame f : FrameList) {
             f.drawFrame();
@@ -65,7 +67,6 @@ public class Grid extends PApplet {
                         && (mouseY >= frame.getY()) && (mouseY <= frame.getY() + frameIncrement)) {
                     // set obstacle coe here
                     frame.setObstacle();
-                    
 
                 }
 
