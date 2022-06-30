@@ -18,6 +18,7 @@ public class Grid extends PApplet {
     public void setup() {
         colorMode(RGB);
         generateFrames();
+        generateControlPanel();
 
     }
 
@@ -32,6 +33,13 @@ public class Grid extends PApplet {
                 }
             }
         }
+    }
+
+    ControlPanel controlPanel;
+
+    public void generateControlPanel(){
+        //control panel class
+        controlPanel = new ControlPanel(this);
     }
 
     public void keyPressed() {
@@ -59,6 +67,7 @@ public class Grid extends PApplet {
     public void draw() {
         background(26, 26, 26);
         drawGrid();
+        controlPanel.diplayControlPanel();
 
         int frameIncrement = 50;
         if (mousePressed) {
@@ -73,6 +82,8 @@ public class Grid extends PApplet {
             }
 
         }
+
+        
     }
 
 }
