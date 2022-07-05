@@ -37,8 +37,8 @@ public class Grid extends PApplet {
 
     ControlPanel controlPanel;
 
-    public void generateControlPanel(){
-        //control panel class
+    public void generateControlPanel() {
+        // control panel class
         controlPanel = new ControlPanel(this);
     }
 
@@ -81,9 +81,12 @@ public class Grid extends PApplet {
 
             }
 
+            System.out.println(mouseX );
+            System.out.println(mouseY );
+            
+
         }
 
-        
     }
 
 }
