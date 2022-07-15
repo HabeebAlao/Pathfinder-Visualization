@@ -67,7 +67,7 @@ public class Grid extends PApplet {
     public void draw() {
         background(26, 26, 26);
         drawGrid();
-        controlPanel.diplayControlPanel();
+        
 
         int frameIncrement = 50;
         if (mousePressed) {
@@ -81,11 +81,12 @@ public class Grid extends PApplet {
 
             }
 
-            System.out.println(mouseX );
-            System.out.println(mouseY );
+            //System.out.println(mouseX );
+            //System.out.println(mouseY );
             
 
         }
+        controlPanel.diplayControlPanel();
 
     }
 

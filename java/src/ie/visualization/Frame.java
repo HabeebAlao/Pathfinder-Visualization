@@ -28,14 +28,6 @@ public class Frame extends PApplet{
         this.drawFrame();
     }
 
-    private void colorIn(){
-        if(isObstacle == 1){
-            G.fill(204, 204, 204);
-        }
-        else{
-            G.fill(255, 185, 20);
-        }
-    }
 
     public void drawFrame(){
         G.colorMode(RGB);
@@ -77,6 +69,13 @@ public class Frame extends PApplet{
         this.isObstacle = 1;
         drawFrame();
     }
+
+    public void unsetObstacle() {
+        this.isObstacle = 0;
+        drawFrame();
+    }
+
+
     
     
 

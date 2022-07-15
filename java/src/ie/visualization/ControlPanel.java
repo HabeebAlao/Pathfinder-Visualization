@@ -1,5 +1,7 @@
 package ie.visualization;
 
+import com.jogamp.common.util.Ringbuffer;
+
 import processing.core.PApplet;
 
 public class ControlPanel {
@@ -32,8 +34,29 @@ public class ControlPanel {
         // G.rect(map(1, 0, 8, this.x1, this.x2), map(1, 0, 8, this.y1,
         // this.y2),map(1,0, 8, this.x1, this.x2)+30, map(1, 0, 8, this.y1, this.y2)+15
         // );
+
+        // set target button
+        if ((G.mousePressed) && (G.mouseX > 125) && (G.mouseX < 200) && (G.mouseY > 680) && (G.mouseY < 700)) {
+            this.SetTargetButtonClicked();
+        } else {
+            G.fill(210, 250, 250, 125);
+        }
         G.rect(125, 680, 200, 700);
+
+        // start button
+        if ((G.mousePressed) && (G.mouseX > 220) && (G.mouseX < 295) && (G.mouseY > 680) && (G.mouseY < 700)) {
+            this.StartButtonClicked();
+        } else {
+            G.fill(210, 250, 250, 125);
+        }
         G.rect(220, 680, 295, 700);
+
+        // reset button
+        if ((G.mousePressed) && (G.mouseX > 315) && (G.mouseX < 390) && (G.mouseY > 680) && (G.mouseY < 700)) {
+            this.resetButtonClicked();
+        } else {
+            G.fill(210, 250, 250, 125);
+        }
         G.rect(315, 680, 390, 700);
 
         String status = "Idle";
@@ -68,6 +91,29 @@ public class ControlPanel {
 
     public float map(float i, float a, float b, float c, float d) {
         return c + ((1 / (b - a)) * (d - c));
+    }
+
+    private void resetButtonClicked() {
+        G.fill(108, 0, 70, 125);
+        System.out.println("reset");
+        for (Frame frame : G.FrameList) {
+
+            frame.unsetObstacle();
+
+        }
+
+    }
+
+    private void StartButtonClicked() {
+        G.fill(108, 0, 70, 125);
+        System.out.println("start");
+
+    }
+
+    private void SetTargetButtonClicked() {
+        G.fill(108, 0, 70, 125);
+        System.out.println("target");
+
     }
 
     public int frameCount(int zoom) {
