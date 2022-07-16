@@ -85,9 +85,20 @@ public class ControlPanel {
         G.textSize(15);
         G.text("Zoom", 318, 618);
         G.line(248, 638, 388, 638);
-        G.circle(248, 638, 10);
+
+        int cy = 638;
+        int radius = 15;
+
+        if ((G.mouseX < cx + radius && G.mouseX > cx - radius) && (G.mouseY < cy + radius && G.mouseY > cy - radius)
+                && (G.mouseX > 248 && G.mouseX < 388) && G.mousePressed) {
+            this.cx = G.mouseX;
+        }
+
+        G.circle(this.cx, cy, radius);
 
     }
+
+    int cx = 248;
 
     public float map(float i, float a, float b, float c, float d) {
         return c + ((1 / (b - a)) * (d - c));
