@@ -1,6 +1,6 @@
 package ie.visualization;
 
-import com.jogamp.common.util.Ringbuffer;
+
 
 import processing.core.PApplet;
 
@@ -86,8 +86,7 @@ public class ControlPanel {
         G.text("Zoom", 318, 618);
         G.line(248, 638, 388, 638);
 
-        int cy = 638;
-        int radius = 15;
+
 
         if ((G.mouseX < cx + radius && G.mouseX > cx - radius) && (G.mouseY < cy + radius && G.mouseY > cy - radius)
                 && (G.mouseX > 248 && G.mouseX < 388) && G.mousePressed) {
@@ -99,6 +98,8 @@ public class ControlPanel {
     }
 
     int cx = 248;
+    int cy = 638;
+    int radius = 15;
 
     public float map(float i, float a, float b, float c, float d) {
         return c + ((1 / (b - a)) * (d - c));
@@ -110,6 +111,8 @@ public class ControlPanel {
         for (Frame frame : G.FrameList) {
 
             frame.unsetObstacle();
+            //frame.unsetStart();
+            //frame.unsetTarget();
 
         }
 
@@ -123,7 +126,8 @@ public class ControlPanel {
 
     private void SetTargetButtonClicked() {
         G.fill(108, 0, 70, 125);
-        System.out.println("target");
+        
+
 
     }
 

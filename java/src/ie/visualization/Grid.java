@@ -30,6 +30,15 @@ public class Grid extends PApplet {
                     Frame f = new Frame(i, j, frameIncrement, count, this);
                     ++count;
                     FrameList.add(f);
+
+                    if(f.framePosition == 55){
+                        f.setStart();
+                        
+                    }
+                    else if(f.framePosition == 199){
+                        f.setTarget();
+
+                    }
                 }
             }
         }
@@ -56,7 +65,7 @@ public class Grid extends PApplet {
         }
 
         /*
-         * test for arraylist implementation
+         * unit test for arraylist implementation
          * for (Frame i : FrameList) {
          * System.out.println(i.framePosition);
          * }
@@ -64,28 +73,48 @@ public class Grid extends PApplet {
 
     }
 
+    int StartAndTargetSet = 0;
+
     public void draw() {
         background(26, 26, 26);
-        drawGrid();
         
+
 
         int frameIncrement = 50;
         if (mousePressed) {
             for (Frame frame : FrameList) {
                 if ((mouseX >= frame.getX()) && (mouseX <= frame.getX() + frameIncrement)
-                        && (mouseY >= frame.getY()) && (mouseY <= frame.getY() + frameIncrement)) {
-                    // set obstacle coe here
+                        && (mouseY >= frame.getY()) && (mouseY <= frame.getY() + frameIncrement)
+                        /*&& ((mouseX > (controlPanel.cx + controlPanel.radius))
+                                && (mouseX < (controlPanel.cx - controlPanel.radius)))
+                        && ((mouseY < (controlPanel.cy - controlPanel.radius))
+                                && (mouseY > (controlPanel.cy + controlPanel.radius)))*/) {
+                    // set obstacle code here]
+                                    /* 
+                    if(frame.framePosition == 70){
+                        frame.setStart();
+                        
+                    }
+                    else if(frame.framePosition == 100){
+                        frame.setTarget();
+
+                    }*/
+                    
                     frame.setObstacle();
+                    
+                    
 
                 }
+                
 
             }
 
-            //System.out.println(mouseX );
-            //System.out.println(mouseY );
-            
+            // System.out.println(mouseX );
+            // System.out.println(mouseY );
 
         }
+        
+        drawGrid();
         controlPanel.diplayControlPanel();
 
     }
