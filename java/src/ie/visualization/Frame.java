@@ -2,23 +2,20 @@ package ie.visualization;
 
 import processing.core.PApplet;
 
-public class Frame extends PApplet{
-    
+public class Frame extends PApplet {
+
     Grid G;
     float x;
     float y;
     float w;
-    
 
-    int framePosition ;
+    int framePosition;
     int isObstacle;
     int isTarget;
     int isStart;
+    int isActive;
 
-    
-
-    
-    public Frame(float x, float y, float w, int framePosition, Grid G){
+    public Frame(float x, float y, float w, int framePosition, Grid G) {
         this.G = G;
         this.x = x;
         this.y = y;
@@ -27,37 +24,29 @@ public class Frame extends PApplet{
         this.isObstacle = 0;
         this.isTarget = 0;
         this.isStart = 0;
-
-
+        this.isActive = 0;
 
         this.drawFrame();
     }
 
-
-
-
-    public void drawFrame(){
+    public void drawFrame() {
         G.colorMode(RGB);
         G.rectMode(LEFT);
         G.stroke(1);
 
-
-       
-        
-        if(this.isObstacle==1){
+        if (this.isObstacle == 1) {
             G.fill(204, 204, 204);
-        }
-        else if (this.isTarget==1){
-            //System.out.println("target is" + this.framePosition);
-            
+        } else if (this.isTarget == 1) {
+            // System.out.println("target is" + this.framePosition);
+
             G.fill(72, 126, 2);
-        }
-        else if(this.isStart==1){
-            //System.out.println("start is" + this.framePosition);
+        } else if (this.isStart == 1) {
+            // System.out.println("start is" + this.framePosition);
 
             G.fill(255, 95, 87);
-        }
-        else{
+        } else if (this.isActive == 1) {
+            G.fill(40, 44, 42);
+        } else {
             G.fill(255, 185, 20);
         }
 
@@ -68,15 +57,15 @@ public class Frame extends PApplet{
         G.textSize(10);
         G.textAlign(CENTER);
         G.fill(1);
-        G.text(this.framePosition, this.x + this.w/2, this.y + this.w/2);
-        G.text(this.framePosition, this.x + this.w/4, this.y + this.w/4);
+        G.text(this.framePosition, this.x + this.w / 2, this.y + this.w / 2);
+        G.text(this.framePosition, this.x + this.w / 4, this.y + this.w / 4);
 
     }
 
     public float getX() {
         return this.x;
     }
-    
+
     public float getY() {
         return this.y;
     }
@@ -86,11 +75,11 @@ public class Frame extends PApplet{
     }
 
     public void setObstacle() {
-        if (isTarget== 0 && isStart ==0){
+        if (isTarget == 0 && isStart == 0) {
             this.isObstacle = 1;
             drawFrame();
         }
-        
+
     }
 
     public void unsetObstacle() {
@@ -118,8 +107,35 @@ public class Frame extends PApplet{
         drawFrame();
     }
 
+    public void setisActive() {
+        this.isActive = 1;
+        drawFrame();
+    }
 
+    public void unsetisActive() {
+        this.isActive = 0;
+        drawFrame();
+    }
     
+    
+
+    public void moveRight() {
+
+        for (Frame f : G.FrameList) {
+            if (f.isObstacle != 1 && f.isTarget != 1) {
+                for (Frame f2 : G.FrameList) {
+                    if (f2.framePosition == this.framePosition +16){
+                        f2.setisActive();
+                    }
+                
+                }
+            }
+        }
+
+
+
+    }
+
     
 
 

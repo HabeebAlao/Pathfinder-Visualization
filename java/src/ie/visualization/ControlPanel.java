@@ -113,6 +113,7 @@ public class ControlPanel {
             frame.unsetObstacle();
             //frame.unsetStart();
             //frame.unsetTarget();
+            frame.unsetisActive();
 
         }
 
@@ -121,6 +122,16 @@ public class ControlPanel {
     private void StartButtonClicked() {
         G.fill(108, 0, 70, 125);
         System.out.println("start");
+
+        /* test for path finding vizualiszation
+        int s = 55;
+        while (s<199) {
+            G.findPath(s);
+            s+=16;
+
+        }
+       */
+        
 
     }
 
