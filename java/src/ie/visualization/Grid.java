@@ -9,6 +9,7 @@ public class Grid extends PApplet {
     int windowDimension = 800;
     ArrayList<Frame> FrameList = new ArrayList<Frame>();
     int frameIncrement = 50;
+    int states = 0;
 
     public void settings() {
         size(windowDimension, windowDimension);
@@ -31,13 +32,6 @@ public class Grid extends PApplet {
                     ++count;
                     FrameList.add(f);
 
-                    if (f.framePosition == 55) {
-                        f.setStart();
-
-                    } else if (f.framePosition == 199) {
-                        f.setTarget();
-
-                    }
                 }
             }
         }
@@ -50,7 +44,68 @@ public class Grid extends PApplet {
         controlPanel = new ControlPanel(this);
     }
 
+    public void mousePressed() {
+
+        if (mousePressed) {
+
+            for (Frame frame : FrameList) {
+                if ((mouseX >= frame.getX()) && (mouseX <= frame.getX() + frameIncrement)
+                        && (mouseY >= frame.getY()) && (mouseY <= frame.getY() + frameIncrement)
+                /*
+                 * && ((mouseX > (controlPanel.cx + controlPanel.radius))/
+                 * && (mouseX < (controlPanel.cx - controlPanel.radius)))
+                 * && ((mouseY < (controlPanel.cy - controlPanel.radius))
+                 * && (mouseY > (controlPanel.cy + controlPanel.radius)))
+                 */) {
+                    // set obstacle code here]
+                    /*
+                     * if(frame.framePosition == 70){
+                     * frame.setStart();
+                     * 
+                     * }
+                     * else if(frame.framePosition == 100){
+                     * frame.setTarget();
+                     * 
+                     * }
+                     */
+
+                    if (states == 0) {
+                        frame.setStart();
+                        states += 1;
+                    } else if (states == 1) {
+                        frame.setTarget();
+                        states += 1;
+                    }
+
+                }
+
+            }
+
+
+
+        }
+    }
+
     public void keyPressed() {
+        switch (key) {
+            case '1':
+                if (states == 2) {
+                    System.out.println("start");
+                    controlPanel.StartButtonClicked();
+                } else {
+                    System.out.println("not ready to start");
+
+                }
+                break;
+
+            case '2':
+                System.out.println("reset");
+                controlPanel.resetButtonClicked();
+                break;
+
+            default:
+                break;
+        }
 
     }
 
@@ -61,6 +116,25 @@ public class Grid extends PApplet {
 
         for (Frame f : FrameList) {
             f.drawFrame();
+        }
+
+        if (mousePressed) {
+
+            for (Frame frame : FrameList) {
+                if ((mouseX >= frame.getX()) && (mouseX <= frame.getX() + frameIncrement)
+                        && (mouseY >= frame.getY()) && (mouseY <= frame.getY() + frameIncrement)) {
+
+                    if (states == 2) {
+                        frame.setObstacle();
+                    }
+
+                }
+
+            }
+
+            // System.out.println(mouseX );
+            // System.out.println(mouseY );
+
         }
 
         /*
@@ -78,7 +152,7 @@ public class Grid extends PApplet {
             if (f.framePosition == Start) {
 
                 f.moveRight();
-                
+
             }
         }
 
@@ -90,44 +164,10 @@ public class Grid extends PApplet {
     public void draw() {
         background(26, 26, 26);
 
-        int frameIncrement = 50;
-        if (mousePressed) {
-            for (Frame frame : FrameList) {
-                if ((mouseX >= frame.getX()) && (mouseX <= frame.getX() + frameIncrement)
-                        && (mouseY >= frame.getY()) && (mouseY <= frame.getY() + frameIncrement)
-                /*
-                 * && ((mouseX > (controlPanel.cx + controlPanel.radius))
-                 * && (mouseX < (controlPanel.cx - controlPanel.radius)))
-                 * && ((mouseY < (controlPanel.cy - controlPanel.radius))
-                 * && (mouseY > (controlPanel.cy + controlPanel.radius)))
-                 */) {
-                    // set obstacle code here]
-                    /*
-                     * if(frame.framePosition == 70){
-                     * frame.setStart();
-                     * 
-                     * }
-                     * else if(frame.framePosition == 100){
-                     * frame.setTarget();
-                     * 
-                     * }
-                     */
-
-                    frame.setObstacle();
-
-                }
-
-            }
-
-            // System.out.println(mouseX );
-            // System.out.println(mouseY );
-
-        }
-
-        //findPath(55);
+        // findPath(55);
 
         drawGrid();
-        controlPanel.diplayControlPanel();
+        // controlPanel.diplayControlPanel();
 
     }
 

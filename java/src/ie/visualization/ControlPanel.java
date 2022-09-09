@@ -105,25 +105,27 @@ public class ControlPanel {
         return c + ((1 / (b - a)) * (d - c));
     }
 
-    private void resetButtonClicked() {
+    public void resetButtonClicked() {
         G.fill(108, 0, 70, 125);
         System.out.println("reset");
         for (Frame frame : G.FrameList) {
 
             frame.unsetObstacle();
-            //frame.unsetStart();
-            //frame.unsetTarget();
+            frame.unsetStart();
+            frame.unsetTarget();
             frame.unsetisActive();
+            G.states = 0;
 
         }
 
     }
 
-    private void StartButtonClicked() {
+    public void StartButtonClicked() {
         G.fill(108, 0, 70, 125);
         System.out.println("start");
-
-        /* test for path finding vizualiszation
+        
+        //test for path finding vizualiszation
+        /* 
         int s = 55;
         while (s<199) {
             G.findPath(s);
@@ -135,12 +137,14 @@ public class ControlPanel {
 
     }
 
-    private void SetTargetButtonClicked() {
+    public void SetTargetButtonClicked() {
         G.fill(108, 0, 70, 125);
         
 
 
     }
+
+    
 
     public int frameCount(int zoom) {
         return zoom;
