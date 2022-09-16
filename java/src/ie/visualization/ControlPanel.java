@@ -15,16 +15,17 @@ public class ControlPanel {
     public ControlPanel(Grid G) {
 
         this.G = G;
-        this.x1 = 75;
-        this.y1 = G.displayHeight - 500;
-        this.x2 = 440;
-        this.y2 = G.displayHeight - 350;
+        this.x1 = 35;
+        this.y1 = G.displayHeight - 440;
+        this.x2 = 260;
+        this.y2 = G.displayHeight - 310;
 
     }
 
     public void diplayControlPanel() {
 
         // control panel
+        G.stroke(255);
         G.fill(40, 40, 40, 125);
         G.rect(this.x1, this.y1, this.x2, this.y2);
 
@@ -36,6 +37,7 @@ public class ControlPanel {
         // );
 
         // set target button
+        /* 
         if ((G.mousePressed) && (G.mouseX > 125) && (G.mouseX < 200) && (G.mouseY > 680) && (G.mouseY < 700)) {
             this.SetTargetButtonClicked();
         } else {
@@ -58,6 +60,7 @@ public class ControlPanel {
             G.fill(210, 250, 250, 125);
         }
         G.rect(315, 680, 390, 700);
+        */
 
         String status = "Idle";
         int steps = 0;
@@ -68,17 +71,18 @@ public class ControlPanel {
         G.textAlign(PApplet.LEFT);
         G.fill(255);
 
-        G.text("Status: " + status, 125, 615);
-        G.text("Steps: " + steps, 125, 633);
-        G.text("Open: " + open, 125, 650);
-        G.text("Closed: " + closed, 125, 667);
+        G.text("Status: " + status, 65, 675);
+        G.text("Steps: " + steps, 65, 692);
+        G.text("Open: " + open, 65, 709);
+        G.text("Closed: " + closed, 65, 726);
 
+        /* 
         G.textSize(10);
         G.textAlign(PApplet.CENTER);
         G.text("Set Target", 159, 694);
         G.text("Start", 255, 694);
         G.text("Reset", 353, 694);
-
+        
         // zoom slider
 
         G.stroke(255);
@@ -94,7 +98,7 @@ public class ControlPanel {
         }
 
         G.circle(this.cx, cy, radius);
-
+        */
     }
 
     int cx = 248;

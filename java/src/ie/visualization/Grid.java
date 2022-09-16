@@ -2,6 +2,7 @@ package ie.visualization;
 
 import java.util.ArrayList;
 
+
 import processing.core.PApplet;
 
 public class Grid extends PApplet {
@@ -32,10 +33,64 @@ public class Grid extends PApplet {
                     ++count;
                     FrameList.add(f);
 
+                    
+
                 }
             }
         }
+
+
+
+        for (Frame f : FrameList) {
+            for (Frame n : FrameList) {
+                //top left neighbour
+                if (n.getX() == f.getX() - frameIncrement && n.getY() == f.getY() - frameIncrement){
+                    f.adjacentFrameLists.add(n);
+                }
+                // top middle 
+                if (n.getX() == f.getX() && n.getY() == f.getY() - frameIncrement){
+                    f.adjacentFrameLists.add(n);
+                }
+                //top right
+                if (n.getX() == f.getX() + frameIncrement && n.getY() == f.getY() - frameIncrement){
+                    f.adjacentFrameLists.add(n);
+                }
+                //left middle
+                if (n.getX() == f.getX() - frameIncrement && n.getY() == f.getY()){
+                    f.adjacentFrameLists.add(n);
+                }
+                //middle middle (parent node)
+                if (n.getX() == f.getX() && n.getY() == f.getY()){
+                    f.adjacentFrameLists.add(n);
+                }
+                //right middle
+                if (n.getX() == f.getX() + frameIncrement && n.getY() == f.getY()){
+                    f.adjacentFrameLists.add(n);
+                }
+                //left bottom
+                if (n.getX() == f.getX() - frameIncrement && n.getY() == f.getY() + frameIncrement){
+                    f.adjacentFrameLists.add(n);
+                }
+                // middle bottom
+                if (n.getX() == f.getX() && n.getY() == f.getY() + frameIncrement){
+                    f.adjacentFrameLists.add(n);
+                }
+                // right bottom
+                if (n.getX() == f.getX() + frameIncrement && n.getY() == f.getY() + frameIncrement){
+                    f.adjacentFrameLists.add(n);
+                }
+
+               
+                
+                
+            }
+            
+        }
+
+
     }
+
+    
 
     ControlPanel controlPanel;
 
@@ -85,6 +140,8 @@ public class Grid extends PApplet {
 
         }
     }
+
+    
 
     public void keyPressed() {
         switch (key) {
@@ -167,7 +224,8 @@ public class Grid extends PApplet {
         // findPath(55);
 
         drawGrid();
-        // controlPanel.diplayControlPanel();
+        
+        controlPanel.diplayControlPanel();
 
     }
 
