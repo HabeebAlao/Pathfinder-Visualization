@@ -127,6 +127,8 @@ public class ControlPanel {
     public void StartButtonClicked() {
         G.fill(108, 0, 70, 125);
         System.out.println("start");
+
+        
         
         //test for path finding vizualiszation
         /* 

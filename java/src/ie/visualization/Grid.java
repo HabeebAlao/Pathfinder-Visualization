@@ -11,6 +11,9 @@ public class Grid extends PApplet {
     ArrayList<Frame> FrameList = new ArrayList<Frame>();
     int frameIncrement = 50;
     int states = 0;
+    Frame startN;
+    Frame endN;
+    boolean pathFound;
 
     public void settings() {
         size(windowDimension, windowDimension);
@@ -127,10 +130,14 @@ public class Grid extends PApplet {
                     if (states == 0) {
                         frame.setStart();
                         states += 1;
+                        startN = frame;
+
                     } else if (states == 1) {
                         frame.setTarget();
                         states += 1;
+                        endN = frame;
                     }
+
 
                 }
 
@@ -149,6 +156,7 @@ public class Grid extends PApplet {
                 if (states == 2) {
                     System.out.println("start");
                     controlPanel.StartButtonClicked();
+                    pathFound = this.findPath();
                 } else {
                     System.out.println("not ready to start");
 
@@ -182,6 +190,7 @@ public class Grid extends PApplet {
                         && (mouseY >= frame.getY()) && (mouseY <= frame.getY() + frameIncrement)) {
 
                     if (states == 2) {
+                        
                         frame.setObstacle();
                     }
 
@@ -203,14 +212,12 @@ public class Grid extends PApplet {
 
     }
 
-    public boolean findPath(int Start) {
+    public boolean findPath() {
 
-        for (Frame f : FrameList) {
-            if (f.framePosition == Start) {
 
-                f.moveRight();
-
-            }
+        for (Frame f : startN.adjacentFrameLists) {
+            f.calculateCosts(startN, endN);
+            
         }
 
         return true;

@@ -13,9 +13,9 @@ public class Frame extends PApplet {
     float w;
 
     int framePosition;
-    int Gcost;
-    int Hcost;
-    int Fcost;
+    float Gcost;
+    float Hcost;
+    float Fcost;
     int isObstacle;
     int isTarget;
     int isStart;
@@ -48,15 +48,40 @@ public class Frame extends PApplet {
         this.drawFrame();
     }
 
+
+
     public void colourNeighbouringNodes(){
         for (Frame neighbouFrame : adjacentFrameLists) {
             neighbouFrame.isActive = 1;
         }
     }
 
-    public void findGcost(Frame startNode){
+    public void calculateCosts(Frame startNode, Frame endNode){
+        findGcost(startNode);
+        findHcost(endNode);
+        findFcost();
+    }
+    
+
+    private void findGcost(Frame startNode){
+        
+        // Gcost is the distance from the starting node
+        this.Gcost = sqrt((this.y - startNode.getY()) * (this.y - startNode.getY()) + (this.x - startNode.getX()) * (this.x - startNode.getX()));
+    }
+
+    private void findHcost(Frame endNode){
+
+        // Hcost is the distance from the end node
+        this.Hcost = sqrt((this.y - endNode.getY()) * (this.y - endNode.getY()) + (this.x - endNode.getX()) * (this.x - endNode.getX()));
         
     }
+
+    private void findFcost(){
+        // Fcost is Gcost plus Hcost
+        this.Fcost = this.Gcost + this.Hcost;
+        
+    }
+
 
     public void drawFrame() {
         G.colorMode(RGB);
@@ -64,7 +89,7 @@ public class Frame extends PApplet {
         G.stroke(1);
 
         if (this.isObstacle == 1) {
-            colourNeighbouringNodes();
+            
             G.fill(204, 204, 204);
         } else if (this.isTarget == 1) {
             colourNeighbouringNodes();
@@ -86,9 +111,9 @@ public class Frame extends PApplet {
         G.textAlign(CENTER);
         G.fill(1);
         G.text(this.framePosition, this.x + this.w / 2, this.y + this.w / 2);
-        G.text(this.Gcost, this.x + this.w / 4, this.y + this.w / 4);
-        G.text(this.Hcost, this.x + this.w / 4 * 3, this.y + this.w / 4);
-        G.text(this.Fcost, this.x + this.w / 4, this.y + this.w / 4 * 3);
+        G.text((int)this.Gcost, this.x + this.w / 4, this.y + this.w / 4);
+        G.text((int)this.Hcost, this.x + this.w / 4 * 3, this.y + this.w / 4);
+        G.text((int)this.Fcost, this.x + this.w / 4, this.y + this.w / 4 * 3);
 
 
     }
@@ -147,6 +172,10 @@ public class Frame extends PApplet {
         this.isActive = 0;
         drawFrame();
     }
+
+    
+
+
 
     public void moveRight() {
 
