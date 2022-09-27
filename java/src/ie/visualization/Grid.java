@@ -14,6 +14,7 @@ public class Grid extends PApplet {
     Frame startN;
     Frame endN;
     boolean pathFound;
+    
 
     public void settings() {
         size(windowDimension, windowDimension);
@@ -166,6 +167,7 @@ public class Grid extends PApplet {
             case '2':
                 System.out.println("reset");
                 controlPanel.resetButtonClicked();
+
                 break;
 
             default:
@@ -173,6 +175,79 @@ public class Grid extends PApplet {
         }
 
     }
+
+    public boolean findPath() {
+
+        ArrayList<Frame> open = new ArrayList<Frame>(); // set of nodes to be evaluated
+        ArrayList<Frame> closed = new ArrayList<Frame>(); // set of nodes not yet evaluated
+
+        open.add(startN);
+
+        Frame current;
+        Frame minFcostNode = startN;
+
+        int count = 0;
+ 
+        while (count !=2) {
+
+            controlPanel.status = "Running";
+            
+
+            current = minFcostNode;
+            current.colourNeighbouringNodes();
+
+            open.remove(current);
+            closed.add(current);
+
+            controlPanel.open += open.size();
+            controlPanel.closed += closed.size();
+
+            if (current == endN){
+                controlPanel.status = "Path found";
+                return true;
+            }
+
+
+            for (Frame f : current.adjacentFrameLists) {
+                if(f.isObstacle!= 1){
+                    f.calculateCosts(startN, endN);
+                }
+    
+            }
+
+            float min = current.adjacentFrameLists.get(0).Fcost;
+
+            for (int i = 0; i < current.adjacentFrameLists.size(); i++){
+                if (current.adjacentFrameLists.get(i).getFcost() < min){
+                    min = current.adjacentFrameLists.get(i).getFcost();
+                    minFcostNode = current.adjacentFrameLists.get(i);
+                }
+            }
+            open.add(minFcostNode);
+
+            System.out.println(minFcostNode.getFcost());
+            
+            count +=1;
+        }
+
+        controlPanel.status = "No Path found";
+        
+
+
+        return true;
+    }
+
+
+    private boolean isOutOfBounds(Frame f){
+
+        if (f.getX() < windowDimension && f.getY() < windowDimension ){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+    
 
     Frame f;
 
@@ -212,16 +287,11 @@ public class Grid extends PApplet {
 
     }
 
-    public boolean findPath() {
+    
 
 
-        for (Frame f : startN.adjacentFrameLists) {
-            f.calculateCosts(startN, endN);
-            
-        }
 
-        return true;
-    }
+    
 
     int StartAndTargetSet = 0;
 

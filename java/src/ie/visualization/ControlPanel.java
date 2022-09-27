@@ -22,6 +22,11 @@ public class ControlPanel {
 
     }
 
+    String status = "Idle";
+        int steps = 0;
+        int open = 0;
+        int closed = 0;
+
     public void diplayControlPanel() {
 
         // control panel
@@ -62,10 +67,7 @@ public class ControlPanel {
         G.rect(315, 680, 390, 700);
         */
 
-        String status = "Idle";
-        int steps = 0;
-        int open = 0;
-        int closed = 0;
+        
 
         G.textSize(15);
         G.textAlign(PApplet.LEFT);
@@ -118,7 +120,9 @@ public class ControlPanel {
             frame.unsetStart();
             frame.unsetTarget();
             frame.unsetisActive();
+            frame.unsetCostValues();
             G.states = 0;
+            this.status = "Idle";
 
         }
 
@@ -128,7 +132,7 @@ public class ControlPanel {
         G.fill(108, 0, 70, 125);
         System.out.println("start");
 
-        
+
         
         //test for path finding vizualiszation
         /* 

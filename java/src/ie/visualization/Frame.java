@@ -5,6 +5,7 @@ import processing.core.PApplet;
 import java.util.ArrayList;
 
 
+
 public class Frame extends PApplet {
 
     Grid G;
@@ -26,8 +27,7 @@ public class Frame extends PApplet {
 
 
     ArrayList<Frame> adjacentFrameLists = new ArrayList<Frame>();
-    ArrayList<Frame> open = new ArrayList<Frame>();
-    ArrayList<Frame> closed = new ArrayList<Frame>();
+    
 
 
     public Frame(float x, float y, float w, int framePosition, Grid G) {
@@ -48,6 +48,8 @@ public class Frame extends PApplet {
         this.drawFrame();
     }
 
+    
+
 
 
     public void colourNeighbouringNodes(){
@@ -60,6 +62,23 @@ public class Frame extends PApplet {
         findGcost(startNode);
         findHcost(endNode);
         findFcost();
+    }
+
+    public void unsetCostValues(){
+        setGcost(0);
+        setHcost(0);
+        setFcost(0);
+
+    }
+
+    public void setFcost(float fcost) {
+        this.Fcost = fcost;
+    }
+    public void setGcost(float gcost) {
+        this.Gcost = gcost;
+    }
+    public void setHcost(float hcost) {
+        this.Hcost = hcost;
     }
     
 
@@ -82,6 +101,10 @@ public class Frame extends PApplet {
         
     }
 
+    public float getFcost(){
+        return this.Fcost;
+    }
+
 
     public void drawFrame() {
         G.colorMode(RGB);
@@ -92,10 +115,10 @@ public class Frame extends PApplet {
             
             G.fill(204, 204, 204);
         } else if (this.isTarget == 1) {
-            colourNeighbouringNodes();
+            
             G.fill(255, 95, 87);
         } else if (this.isStart == 1) {
-            colourNeighbouringNodes();
+            
             G.fill(72, 126, 2);
         } else if (this.isActive == 1) {
             G.fill(112, 212, 234);
@@ -135,7 +158,6 @@ public class Frame extends PApplet {
             this.isObstacle = 1;
             drawFrame();
         }
-
     }
 
     public void unsetObstacle() {
@@ -204,4 +226,7 @@ public class Frame extends PApplet {
 
     }
 
+
+
+    
 }
