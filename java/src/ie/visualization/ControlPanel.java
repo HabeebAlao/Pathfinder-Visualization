@@ -121,6 +121,10 @@ public class ControlPanel {
             frame.unsetTarget();
             frame.unsetisActive();
             frame.unsetCostValues();
+            frame.unsetIsPath();
+            this.steps = 0;
+            this.open = 0;
+            this.closed = 0;
             G.states = 0;
             this.status = "Idle";
 

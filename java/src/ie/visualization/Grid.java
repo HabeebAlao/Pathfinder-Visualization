@@ -2,7 +2,6 @@ package ie.visualization;
 
 import java.util.ArrayList;
 
-
 import processing.core.PApplet;
 
 public class Grid extends PApplet {
@@ -14,7 +13,6 @@ public class Grid extends PApplet {
     Frame startN;
     Frame endN;
     boolean pathFound;
-    
 
     public void settings() {
         size(windowDimension, windowDimension);
@@ -37,64 +35,54 @@ public class Grid extends PApplet {
                     ++count;
                     FrameList.add(f);
 
-                    
-
                 }
             }
         }
-
-
 
         for (Frame f : FrameList) {
             for (Frame n : FrameList) {
-                //top left neighbour
-                if (n.getX() == f.getX() - frameIncrement && n.getY() == f.getY() - frameIncrement){
+                // top left neighbour
+                if (n.getX() == f.getX() - frameIncrement && n.getY() == f.getY() - frameIncrement) {
                     f.adjacentFrameLists.add(n);
                 }
-                // top middle 
-                if (n.getX() == f.getX() && n.getY() == f.getY() - frameIncrement){
+                // top middle
+                if (n.getX() == f.getX() && n.getY() == f.getY() - frameIncrement) {
                     f.adjacentFrameLists.add(n);
                 }
-                //top right
-                if (n.getX() == f.getX() + frameIncrement && n.getY() == f.getY() - frameIncrement){
+                // top right
+                if (n.getX() == f.getX() + frameIncrement && n.getY() == f.getY() - frameIncrement) {
                     f.adjacentFrameLists.add(n);
                 }
-                //left middle
-                if (n.getX() == f.getX() - frameIncrement && n.getY() == f.getY()){
+                // left middle
+                if (n.getX() == f.getX() - frameIncrement && n.getY() == f.getY()) {
                     f.adjacentFrameLists.add(n);
                 }
-                //middle middle (parent node)
-                if (n.getX() == f.getX() && n.getY() == f.getY()){
+                // middle middle (parent node)
+                if (n.getX() == f.getX() && n.getY() == f.getY()) {
                     f.adjacentFrameLists.add(n);
                 }
-                //right middle
-                if (n.getX() == f.getX() + frameIncrement && n.getY() == f.getY()){
+                // right middle
+                if (n.getX() == f.getX() + frameIncrement && n.getY() == f.getY()) {
                     f.adjacentFrameLists.add(n);
                 }
-                //left bottom
-                if (n.getX() == f.getX() - frameIncrement && n.getY() == f.getY() + frameIncrement){
+                // left bottom
+                if (n.getX() == f.getX() - frameIncrement && n.getY() == f.getY() + frameIncrement) {
                     f.adjacentFrameLists.add(n);
                 }
                 // middle bottom
-                if (n.getX() == f.getX() && n.getY() == f.getY() + frameIncrement){
+                if (n.getX() == f.getX() && n.getY() == f.getY() + frameIncrement) {
                     f.adjacentFrameLists.add(n);
                 }
                 // right bottom
-                if (n.getX() == f.getX() + frameIncrement && n.getY() == f.getY() + frameIncrement){
+                if (n.getX() == f.getX() + frameIncrement && n.getY() == f.getY() + frameIncrement) {
                     f.adjacentFrameLists.add(n);
                 }
 
-               
-                
-                
             }
-            
+
         }
 
-
     }
-
-    
 
     ControlPanel controlPanel;
 
@@ -139,17 +127,12 @@ public class Grid extends PApplet {
                         endN = frame;
                     }
 
-
                 }
 
             }
 
-
-
         }
     }
-
-    
 
     public void keyPressed() {
         switch (key) {
@@ -176,78 +159,86 @@ public class Grid extends PApplet {
 
     }
 
-    public boolean findPath() {
+    public Frame MinFcost(ArrayList<Frame> list) {
 
+        Frame min = list.get(0);
+
+        for (Frame frame : list) {
+            if (frame.getFcost() <= min.getFcost())
+                min = frame;
+        }
+
+        return min;
+
+    }
+
+    public boolean findPath() {
+        Frame current;
         ArrayList<Frame> open = new ArrayList<Frame>(); // set of nodes to be evaluated
         ArrayList<Frame> closed = new ArrayList<Frame>(); // set of nodes not yet evaluated
 
         open.add(startN);
 
-        Frame current;
-        Frame minFcostNode = startN;
-
-        int count = 0;
- 
-        while (count !=2) {
+        while (open.size() > 0) {
 
             controlPanel.status = "Running";
-            
 
-            current = minFcostNode;
-            current.colourNeighbouringNodes();
+            current = MinFcost(open);
 
             open.remove(current);
             closed.add(current);
 
-            controlPanel.open += open.size();
-            controlPanel.closed += closed.size();
-
-            if (current == endN){
+            if (current == endN) {
                 controlPanel.status = "Path found";
+
+                // color path
+                Frame next = endN;
+                while (next.parent != null) {
+                    
+                    next.setIsPath();
+                    next = next.parent;
+
+                }
                 return true;
             }
+            current.colourNeighbouringNodes();
 
+            controlPanel.open = open.size();
+            controlPanel.closed = closed.size();
 
             for (Frame f : current.adjacentFrameLists) {
-                if(f.isObstacle!= 1){
+
+                if (f.isObstacle == 1 || closed.contains(f)) {
+                    continue;
+                }
+
+                if (!open.contains(f)) {
                     f.calculateCosts(startN, endN);
+                    f.parent = current;
                 }
-    
-            }
+                if (!open.contains(f)) {
+                    open.add(f);
 
-            float min = current.adjacentFrameLists.get(0).Fcost;
-
-            for (int i = 0; i < current.adjacentFrameLists.size(); i++){
-                if (current.adjacentFrameLists.get(i).getFcost() < min){
-                    min = current.adjacentFrameLists.get(i).getFcost();
-                    minFcostNode = current.adjacentFrameLists.get(i);
                 }
             }
-            open.add(minFcostNode);
 
-            System.out.println(minFcostNode.getFcost());
-            
-            count +=1;
+            // find neighboring node with min f cost
+
         }
 
         controlPanel.status = "No Path found";
-        
 
-
-        return true;
+        return false;
     }
 
+    private boolean isOutOfBounds(Frame f) {
 
-    private boolean isOutOfBounds(Frame f){
-
-        if (f.getX() < windowDimension && f.getY() < windowDimension ){
+        if (f.getX() < windowDimension && f.getY() < windowDimension) {
             return false;
-        }
-        else{
+        } else {
             return true;
         }
     }
-    
 
     Frame f;
 
@@ -265,7 +256,7 @@ public class Grid extends PApplet {
                         && (mouseY >= frame.getY()) && (mouseY <= frame.getY() + frameIncrement)) {
 
                     if (states == 2) {
-                        
+
                         frame.setObstacle();
                     }
 
@@ -287,12 +278,6 @@ public class Grid extends PApplet {
 
     }
 
-    
-
-
-
-    
-
     int StartAndTargetSet = 0;
 
     public void draw() {
@@ -301,7 +286,7 @@ public class Grid extends PApplet {
         // findPath(55);
 
         drawGrid();
-        
+
         controlPanel.diplayControlPanel();
 
     }
